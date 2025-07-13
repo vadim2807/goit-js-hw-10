@@ -2,7 +2,6 @@ import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 
 
-const del = document.querySelector("input[type='number']").value;
 const form = document.querySelector(".form"); 
 
 let selectedState;
@@ -10,6 +9,8 @@ let selectedState;
 form.addEventListener('submit', (event) => { 
     event.preventDefault(); 
 
+    let del = document.querySelector("input[type='number']").value;
+    del = Number(del);
     const promise = new Promise((resolve, reject) => {
         setTimeout(() => {
             const checkedRadio = document.querySelector("input[name='state']:checked");
@@ -21,7 +22,7 @@ form.addEventListener('submit', (event) => {
                     reject(del); // Передаём значение
                 }
             }
-        }, Number(del)); 
+        }, del); 
     });
 
     promise

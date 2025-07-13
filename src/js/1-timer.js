@@ -20,7 +20,6 @@ const options = {
     userSelectedDate = selectedDates[0];
     chekDate();  
   },
-  onOpen(){clearInterval(reIn)},
 };
 
 //Проверка даты-----------------------------------
@@ -36,30 +35,10 @@ function chekDate() {
     });
     userSelectedDate = null;
     btn.disabled = true;
-    startTimeUpdate();
   } else {
     btn.disabled = false;
   }
 }
-
-// Функция для запуска обновления времени
-function startTimeUpdate() {
-  if (fp) {
-    fp.destroy(); // Уничтожаем текущий экземпляр
-  }
-  options.defaultDate = new Date();
-  fp = flatpickr("#datetime-picker", options);
-  reIn = setInterval(() => {
-    if (fp) fp.destroy();
-    options.defaultDate = new Date();
-    fp = flatpickr("#datetime-picker", options);
-  }, 300);
-}
-
-// Инициализация с обновлением времени
-let fp = null; 
-let reIn = null; // Используем let для возможности очистки
-startTimeUpdate(); // Вызываем функцию для начальной инициализации
 
 // Добавление нуля
 function addZero(value) {
@@ -96,8 +75,12 @@ const minutesV = document.querySelector('[data-minutes]');
 const secondsV = document.querySelector('[data-seconds]');
 const datePicker = document.getElementById('datetime-picker');
 
+
+flatpickr("#datetime-picker", options);
+
 // Обработчик нажатия
 btn.addEventListener('click', () => {
+  
   if (!userSelectedDate) return;
 
   btn.disabled = true;
@@ -114,8 +97,6 @@ btn.addEventListener('click', () => {
       minutesV.textContent = "00";
       secondsV.textContent = "00";
       datePicker.disabled = false; // Активен после остановки
-      // Перезапуск динамического обновления времени
-      startTimeUpdate(); // Вызываем функцию для перезапуска
       return;
     }
 
